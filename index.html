@@ -78,8 +78,8 @@
         <div>
           <label>Oklahoma vs Alabama</label>
           <div class="row">
-            <input id="OU" placeholder="Oklahoma (-110 or 50)" />
-            <input id="BAMA" placeholder="Alabama (-110 or 50)" />
+            <input id="OU" placeholder="Oklahoma (-105 or 51)" />
+            <input id="BAMA" placeholder="Alabama (-115 or 53)" />
           </div>
           <div class="row">
             <select id="R1_W1">
@@ -95,8 +95,8 @@
         <div>
           <label>Oregon vs James Madison</label>
           <div class="row">
-            <input id="ORE" placeholder="Oregon (-110 or 50)" />
-            <input id="JMU" placeholder="JMU (-110 or 50)" />
+            <input id="ORE" placeholder="Oregon (-1600 or 94)" />
+            <input id="JMU" placeholder="JMU (+900 or 10)" />
           </div>
           <div class="row">
             <select id="R1_W2">
@@ -112,8 +112,8 @@
         <div>
           <label>Texas A&amp;M vs Miami</label>
           <div class="row">
-            <input id="TAMU" placeholder="Texas A&M (-110 or 50)" />
-            <input id="MIA" placeholder="Miami (-110 or 50)" />
+            <input id="TAMU" placeholder="Texas A&M (-185 or 65)" />
+            <input id="MIA" placeholder="Miami (+150 or 40)" />
           </div>
           <div class="row">
             <select id="R1_W3">
@@ -129,8 +129,8 @@
         <div>
           <label>Ole Miss vs Tulane</label>
           <div class="row">
-            <input id="MISS" placeholder="Ole Miss (-110 or 50)" />
-            <input id="TUL" placeholder="Tulane (-110 or 50)" />
+            <input id="MISS" placeholder="Ole Miss (-900 or 90)" />
+            <input id="TUL" placeholder="Tulane (+600 or 14)" />
           </div>
           <div class="row">
             <select id="R1_W4">
@@ -153,8 +153,8 @@
         <div>
           <label>Indiana vs Winner(OU/BAMA)</label>
           <div class="row">
-            <input id="IND" placeholder="Indiana (-110 or 50)" />
-            <input id="IND_OPP" placeholder="Opponent (-110 or 50)" />
+            <input id="IND" placeholder="Indiana (-120 or 55)" />
+            <input id="IND_OPP" placeholder="Opponent (+100 or 45)" />
           </div>
           <div class="row">
             <select id="QF_W1">
@@ -170,8 +170,8 @@
         <div>
           <label>Texas Tech vs Winner(ORE/JMU)</label>
           <div class="row">
-            <input id="TTU" placeholder="Texas Tech (-110 or 50)" />
-            <input id="TTU_OPP" placeholder="Opponent (-110 or 50)" />
+            <input id="TTU" placeholder="Texas Tech (+120 or 40)" />
+            <input id="TTU_OPP" placeholder="Opponent (-140 or 60)" />
           </div>
           <div class="row">
             <select id="QF_W2">
@@ -187,8 +187,8 @@
         <div>
           <label>Ohio State vs Winner(TAMU/MIA)</label>
           <div class="row">
-            <input id="OSU" placeholder="Ohio State (-110 or 50)" />
-            <input id="OSU_OPP" placeholder="Opponent (-110 or 50)" />
+            <input id="OSU" placeholder="Ohio State (-230 or 70)" />
+            <input id="OSU_OPP" placeholder="Opponent (+190 or 30)" />
           </div>
           <div class="row">
             <select id="QF_W3">
@@ -204,8 +204,8 @@
         <div>
           <label>Georgia vs Winner(MISS/TUL)</label>
           <div class="row">
-            <input id="UGA" placeholder="Georgia (-110 or 50)" />
-            <input id="UGA_OPP" placeholder="Opponent (-110 or 50)" />
+            <input id="UGA" placeholder="Georgia (-190 or 65)" />
+            <input id="UGA_OPP" placeholder="Opponent (+160 or 35)" />
           </div>
           <div class="row">
             <select id="QF_W4">
@@ -354,20 +354,20 @@
 
     function resetDefaults() {
       // Round 1 defaults
-      $('OU').value = '-115'; $('BAMA').value = '-120';
-      $('ORE').value = '-115'; $('JMU').value = '-120';
-      $('TAMU').value = '-115'; $('MIA').value = '-120';
-      $('MISS').value = '-115'; $('TUL').value = '-120';
+      $('OU').value = '-105'; $('BAMA').value = '-115';
+      $('ORE').value = '-1600'; $('JMU').value = '+900';
+      $('TAMU').value = '-185'; $('MIA').value = '+150';
+      $('MISS').value = '-900'; $('TUL').value = '+600';
       $('R1_W1').value = 'Alabama';
       $('R1_W2').value = 'Oregon';
       $('R1_W3').value = 'Texas A&M';
       $('R1_W4').value = 'Ole Miss';
 
       // Quarterfinal defaults (rough)
-      $('IND').value = '-110'; $('IND_OPP').value = '-110';
-      $('TTU').value = '-110'; $('TTU_OPP').value = '-110';
-      $('OSU').value = '-110'; $('OSU_OPP').value = '+110';
-      $('UGA').value = '-110'; $('UGA_OPP').value = '+110';
+      $('IND').value = '-120'; $('IND_OPP').value = '+100';
+      $('TTU').value = '+120'; $('TTU_OPP').value = '-140';
+      $('OSU').value = '-230'; $('OSU_OPP').value = '+190';
+      $('UGA').value = '-190'; $('UGA_OPP').value = '+160';
 
       $('QF_W1').value = 'Indiana';
       $('QF_W2').value = 'Winner R1(ORE/JMU)';
