@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CFP Bracket Probability Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --accent: #38bdf8;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --good: #22c55e;
+      --bad: #ef4444;
+    }
+    body {
+      margin: 0; padding: 24px; background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+    h1, h2, h3 { margin: 0 0 12px; }
+    .container {
+      max-width: 1000px; margin: 0 auto; display: grid; gap: 16px;
+      grid-template-columns: 1fr;
+    }
+    .card {
+      background: var(--panel); border-radius: 12px; padding: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    input, select {
+      width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #1f2937;
+      background: #0b1220; color: var(--text); margin-bottom: 10px;
+    }
+    .row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .flex { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .btn {
+      background: var(--accent); color: #052130; border: none; padding: 10px 14px; border-radius: 8px;
+      font-weight: 700; cursor: pointer;
+    }
+    .btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .stat {
+      background: #0b1220; border: 1px solid #1f2937; border-radius: 10px; padding: 12px; flex: 1;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    .small { font-size: 12px; color: var(--muted); }
+    .good { color: var(--good); }
+    .bad { color: var(--bad); }
+    .hint { color: var(--muted); margin-top: 4px; }
+    .section-title { margin-top: 4px; margin-bottom: 8px; color: var(--muted); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>College Football Playoff Probability Calculator</h1>
+      <p class="hint">Enter moneylines or direct win probabilities for each matchup. Pick your winners. The calculator multiplies the path probabilities and highlights the overall chance your bracket hits.</p>
+    </div>
+
+    <!-- Input mode -->
+    <div class="card">
+      <h2>Input mode</h2>
+      <div class="flex">
+        <label for="mode" class="section-title">Choose how to enter odds</label>
+        <select id="mode">
+          <option value="moneyline">Moneyline (e.g., -150 or +200)</option>
+          <option value="prob">Win probability (%)</option>
+        </select>
+        <button class="btn secondary" id="reset">Reset to defaults</button>
+      </div>
+      <p class="small">Tip: Moneyline conversion uses standard implied probability formulas and removes vig on each matchup.</p>
+    </div>
+
+    <!-- Round 1 -->
+    <div class="card">
+      <h2>Round 1 matchups</h2>
+      <div class="grid3">
+        <div>
+          <label>Oklahoma vs Alabama</label>
+          <div class="row">
+            <input id="OU" placeholder="Oklahoma (-105 or 51)" />
+            <input id="BAMA" placeholder="Alabama (-115 or 53)" />
+          </div>
+          <div class="row">
+            <select id="R1_W1">
+              <option value="Oklahoma">Pick Oklahoma</option>
+              <option value="Alabama" selected>Pick Alabama</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_R1_W1">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label>Oregon vs James Madison</label>
+          <div class="row">
+            <input id="ORE" placeholder="Oregon (-1600 or 94)" />
+            <input id="JMU" placeholder="JMU (+900 or 10)" />
+          </div>
+          <div class="row">
+            <select id="R1_W2">
+              <option value="Oregon" selected>Pick Oregon</option>
+              <option value="James Madison">Pick James Madison</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_R1_W2">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label>Texas A&amp;M vs Miami</label>
+          <div class="row">
+            <input id="TAMU" placeholder="Texas A&M (-185 or 65)" />
+            <input id="MIA" placeholder="Miami (+150 or 40)" />
+          </div>
+          <div class="row">
+            <select id="R1_W3">
+              <option value="Texas A&M" selected>Pick Texas A&amp;M</option>
+              <option value="Miami">Pick Miami</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_R1_W3">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label>Ole Miss vs Tulane</label>
+          <div class="row">
+            <input id="MISS" placeholder="Ole Miss (-900 or 90)" />
+            <input id="TUL" placeholder="Tulane (+600 or 14)" />
+          </div>
+          <div class="row">
+            <select id="R1_W4">
+              <option value="Ole Miss" selected>Pick Ole Miss</option>
+              <option value="Tulane">Pick Tulane</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_R1_W4">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quarterfinals -->
+    <div class="card">
+      <h2>Quarterfinal matchups</h2>
+      <p class="hint">These depend on Round 1 winners. Enter the odds for each quarterfinal pairing.</p>
+      <div class="grid3">
+        <div>
+          <label>Indiana vs Winner(OU/BAMA)</label>
+          <div class="row">
+            <input id="IND" placeholder="Indiana (-120 or 55)" />
+            <input id="IND_OPP" placeholder="Opponent (+100 or 45)" />
+          </div>
+          <div class="row">
+            <select id="QF_W1">
+              <option value="Indiana" selected>Pick Indiana</option>
+              <option value="Winner R1(OU/BAMA)">Pick Winner R1(OU/BAMA)</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_QF_W1">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label>Texas Tech vs Winner(ORE/JMU)</label>
+          <div class="row">
+            <input id="TTU" placeholder="Texas Tech (+120 or 40)" />
+            <input id="TTU_OPP" placeholder="Opponent (-140 or 60)" />
+          </div>
+          <div class="row">
+            <select id="QF_W2">
+              <option value="Texas Tech">Pick Texas Tech</option>
+              <option value="Winner R1(ORE/JMU)" selected>Pick Winner R1(ORE/JMU)</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_QF_W2">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label>Ohio State vs Winner(TAMU/MIA)</label>
+          <div class="row">
+            <input id="OSU" placeholder="Ohio State (-230 or 70)" />
+            <input id="OSU_OPP" placeholder="Opponent (+190 or 30)" />
+          </div>
+          <div class="row">
+            <select id="QF_W3">
+              <option value="Ohio State" selected>Pick Ohio State</option>
+              <option value="Winner R1(TAMU/MIA)">Pick Winner R1(TAMU/MIA)</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_QF_W3">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label>Georgia vs Winner(MISS/TUL)</label>
+          <div class="row">
+            <input id="UGA" placeholder="Georgia (-190 or 65)" />
+            <input id="UGA_OPP" placeholder="Opponent (+160 or 35)" />
+          </div>
+          <div class="row">
+            <select id="QF_W4">
+              <option value="Georgia" selected>Pick Georgia</option>
+              <option value="Winner R1(MISS/TUL)">Pick Winner R1(MISS/TUL)</option>
+            </select>
+            <div class="stat">
+              <div class="small">Implied P(win): <span class="mono" id="P_QF_W4">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="card">
+      <h2>Results</h2>
+      <div class="flex">
+        <button class="btn" id="compute">Compute path probability</button>
+        <button class="btn secondary" id="fillChalk">Fill chalk (higher-prob picks)</button>
+      </div>
+      <div class="flex" style="margin-top: 12px;">
+        <div class="stat">
+          <div class="small">Round 1 combined P</div>
+          <div class="mono" id="R1_COMBINED">—</div>
+        </div>
+        <div class="stat">
+          <div class="small">Quarterfinals combined P</div>
+          <div class="mono" id="QF_COMBINED">—</div>
+        </div>
+        <div class="stat">
+          <div class="small">Overall path probability</div>
+          <div class="mono" id="OVERALL">—</div>
+        </div>
+      </div>
+      <p class="hint">Overall = product of your chosen winners’ implied probabilities in Round 1 and the Quarterfinals.</p>
+    </div>
+  </div>
+
+  <script>
+    // Helpers
+    const $ = (id) => document.getElementById(id);
+
+    // Convert moneyline to implied probability (American odds).
+    function moneylineToProb(ml) {
+      const o = Number(ml);
+      if (!isFinite(o) || o === 0) return NaN;
+      if (o < 0) return Math.abs(o) / (Math.abs(o) + 100);
+      return 100 / (o + 100);
+    }
+
+    // Remove vig to get fair probabilities from two opposing lines.
+    function unvig(probA, probB) {
+      const sum = probA + probB;
+      if (sum === 0 || !isFinite(sum)) return [NaN, NaN];
+      return [probA / sum, probB / sum];
+    }
+
+    // Read pair as moneyline or probability input
+    function readPair(aId, bId, mode) {
+      const aRaw = $(aId).value.trim();
+      const bRaw = $(bId).value.trim();
+      let pA, pB;
+
+      if (mode === 'moneyline') {
+        pA = moneylineToProb(aRaw);
+        pB = moneylineToProb(bRaw);
+        [pA, pB] = unvig(pA, pB);
+      } else {
+        // percent to decimal (e.g., 55 -> 0.55)
+        pA = Number(aRaw) / 100;
+        pB = Number(bRaw) / 100;
+      }
+      return [pA, pB];
+    }
+
+    // Format percentage
+    function fmtPct(x) {
+      if (!isFinite(x)) return '—';
+      return (x * 100).toFixed(1) + '%';
+    }
+
+    // Compute chosen winner probability from a pair and dropdown pick text matching either side
+    function chosenProb(pA, pB, pickText, leftName, rightName) {
+      if (pickText.includes(leftName)) return pA;
+      if (pickText.includes(rightName)) return pB;
+      // For quarterfinals, the rightName is often "Opponent"
+      if (pickText.toLowerCase().includes('opponent')) return pB;
+      return NaN;
+    }
+
+    function compute() {
+      const mode = $('mode').value;
+
+      // Round 1 pairs
+      const [pOU, pBAMA] = readPair('OU', 'BAMA', mode);
+      const [pORE, pJMU] = readPair('ORE', 'JMU', mode);
+      const [pTAMU, pMIA] = readPair('TAMU', 'MIA', mode);
+      const [pMISS, pTUL] = readPair('MISS', 'TUL', mode);
+
+      const pick1 = $('R1_W1').value; // Oklahoma/Alabama
+      const pick2 = $('R1_W2').value; // Oregon/JMU
+      const pick3 = $('R1_W3').value; // TAMU/MIA
+      const pick4 = $('R1_W4').value; // Ole Miss/Tulane
+
+      const P1 = pick1 === 'Oklahoma' ? pOU : pBAMA;
+      const P2 = pick2 === 'Oregon' ? pORE : pJMU;
+      const P3 = pick3 === 'Texas A&M' ? pTAMU : pMIA;
+      const P4 = pick4 === 'Ole Miss' ? pMISS : pTUL;
+
+      $('P_R1_W1').textContent = fmtPct(P1);
+      $('P_R1_W2').textContent = fmtPct(P2);
+      $('P_R1_W3').textContent = fmtPct(P3);
+      $('P_R1_W4').textContent = fmtPct(P4);
+
+      const R1combined = P1 * P2 * P3 * P4;
+      $('R1_COMBINED').textContent = fmtPct(R1combined);
+
+      // Quarterfinal pairs
+      const [pIND, pIND_OPP] = readPair('IND', 'IND_OPP', mode);
+      const [pTTU, pTTU_OPP] = readPair('TTU', 'TTU_OPP', mode);
+      const [pOSU, pOSU_OPP] = readPair('OSU', 'OSU_OPP', mode);
+      const [pUGA, pUGA_OPP] = readPair('UGA', 'UGA_OPP', mode);
+
+      const pickQ1 = $('QF_W1').value; // Indiana vs Winner(OU/BAMA)
+      const pickQ2 = $('QF_W2').value; // Texas Tech vs Winner(ORE/JMU)
+      const pickQ3 = $('QF_W3').value; // Ohio State vs Winner(TAMU/MIA)
+      const pickQ4 = $('QF_W4').value; // Georgia vs Winner(MISS/TUL)
+
+      const PQ1 = pickQ1 === 'Indiana' ? pIND : pIND_OPP;
+      const PQ2 = pickQ2 === 'Texas Tech' ? pTTU : pTTU_OPP;
+      const PQ3 = pickQ3 === 'Ohio State' ? pOSU : pOSU_OPP;
+      const PQ4 = pickQ4 === 'Georgia' ? pUGA : pUGA_OPP;
+
+      $('P_QF_W1').textContent = fmtPct(PQ1);
+      $('P_QF_W2').textContent = fmtPct(PQ2);
+      $('P_QF_W3').textContent = fmtPct(PQ3);
+      $('P_QF_W4').textContent = fmtPct(PQ4);
+
+      const QFcombined = PQ1 * PQ2 * PQ3 * PQ4;
+      $('QF_COMBINED').textContent = fmtPct(QFcombined);
+
+      const OVERALL = R1combined * QFcombined;
+      $('OVERALL').textContent = fmtPct(OVERALL);
+    }
+
+    function resetDefaults() {
+      // Round 1 defaults
+      $('OU').value = '-105'; $('BAMA').value = '-115';
+      $('ORE').value = '-1600'; $('JMU').value = '+900';
+      $('TAMU').value = '-185'; $('MIA').value = '+150';
+      $('MISS').value = '-900'; $('TUL').value = '+600';
+      $('R1_W1').value = 'Alabama';
+      $('R1_W2').value = 'Oregon';
+      $('R1_W3').value = 'Texas A&M';
+      $('R1_W4').value = 'Ole Miss';
+
+      // Quarterfinal defaults (rough)
+      $('IND').value = '-120'; $('IND_OPP').value = '+100';
+      $('TTU').value = '+120'; $('TTU_OPP').value = '-140';
+      $('OSU').value = '-230'; $('OSU_OPP').value = '+190';
+      $('UGA').value = '-190'; $('UGA_OPP').value = '+160';
+
+      $('QF_W1').value = 'Indiana';
+      $('QF_W2').value = 'Winner R1(ORE/JMU)';
+      $('QF_W3').value = 'Ohio State';
+      $('QF_W4').value = 'Georgia';
+
+      compute();
+    }
+
+    function fillChalk() {
+      $('R1_W1').value = 'Alabama';
+      $('R1_W2').value = 'Oregon';
+      $('R1_W3').value = 'Texas A&M';
+      $('R1_W4').value = 'Ole Miss';
+      $('QF_W1').value = 'Indiana';
+      $('QF_W2').value = 'Winner R1(ORE/JMU)';
+      $('QF_W3').value = 'Ohio State';
+      $('QF_W4').value = 'Georgia';
+      compute();
+    }
+
+    $('compute').addEventListener('click', compute);
+    $('reset').addEventListener('click', resetDefaults);
+    $('fillChalk').addEventListener('click', fillChalk);
+
+    // Initialize
+    resetDefaults();
+  </script>
+</body>
+</html>
