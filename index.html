@@ -49,28 +49,30 @@
     .hint { color: var(--muted); margin-top: 4px; }
     .section-title { margin-top: 4px; margin-bottom: 8px; color: var(--muted); font-weight: 600; }
 
-    .modal {
-  display: none; /* Hidden by default */
+   .modal {
+  display: none; /* hidden by default */
   position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
+  top: 0; left: 0;
   width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.5); /* semi-transparent backdrop */
+  background: rgba(0,0,0,0.4); /* backdrop */
 }
 
-.modal-content {
+.modal-box {
   background: #fff;
   margin: 10% auto;
   padding: 20px;
+  border: 1px solid #333;
   border-radius: 6px;
-  width: 80%;
+  width: 60%;
   max-height: 70%;
   overflow-y: auto;
 }
 
-.close {
+.close-btn {
   float: right;
-  font-size: 24px;
+  background: #eee;
+  border: none;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
@@ -83,9 +85,15 @@
       <h1>College Football Playoff Probability Calculator</h1>
       <p class="hint">Enter moneylines or direct win probabilities for each matchup. Pick your winners. The calculator multiplies the path probabilities and highlights the overall chance your bracket hits. Calculator is created by Gary Langley for entertainment purposes only</p>
   <button id="viewReadme">View README</button>
-<div id="readmeContainer" style="white-space: pre-wrap; margin-top: 1em; border: 1px solid #ccc; padding: 10px; display: none;"></div>
-    <script src="script.js"></script>
-    </div>
+
+<!-- Modal box -->
+<div id="readmeModal" class="modal">
+  <div class="modal-box">
+    <button id="closeReadme" class="close-btn">Close ✖</button>
+    <pre id="readmeText"></pre>
+  </div>
+</div>
+
 
 
     <!-- Input mode -->
