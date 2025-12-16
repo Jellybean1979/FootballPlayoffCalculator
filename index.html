@@ -48,6 +48,32 @@
     .bad { color: var(--bad); }
     .hint { color: var(--muted); margin-top: 4px; }
     .section-title { margin-top: 4px; margin-bottom: 8px; color: var(--muted); font-weight: 600; }
+
+    .modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5); /* semi-transparent backdrop */
+}
+
+.modal-content {
+  background: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 6px;
+  width: 80%;
+  max-height: 70%;
+  overflow-y: auto;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
   </style>
 </head>
 <body>
@@ -60,6 +86,17 @@
 <div id="readmeContainer" style="white-space: pre-wrap; margin-top: 1em; border: 1px solid #ccc; padding: 10px; display: none;"></div>
     <script src="script.js"></script>-->
     </div>
+
+    <button id="viewReadme">View README</button>
+
+<!-- Modal structure -->
+<div id="readmeModal" class="modal">
+  <div class="modal-content">
+    <span id="closeReadme" class="close">&times;</span>
+    <pre id="readmeText"></pre>
+  </div>
+</div>
+
 
     <!-- Input mode -->
     <div class="card">
