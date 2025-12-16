@@ -58,7 +58,8 @@
 }
 
 .modal-box {
-  background: #fff;
+  background: #f0f0f0; /* light grey background */
+  color: #000; /* black text */
   margin: 10% auto;
   padding: 20px;
   border: 1px solid #333;
@@ -66,14 +67,22 @@
   width: 60%;
   max-height: 70%;
   overflow-y: auto;
+  position: relative; /* allows absolute positioning inside */
 }
 
 .close-btn {
-  float: right;
+  position: absolute; /* position relative to modal-box */
+  top: 10px; /* move higher up */
+  right: 10px; /* keep it in the corner */
   background: #eee;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+pre#readmeText {
+  white-space: pre-wrap; /* wrap long lines */
+  font-family: monospace;
 }
 
   </style>
